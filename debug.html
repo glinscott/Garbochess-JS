@@ -1,0 +1,50 @@
+<!-- saved from url=(0014)about:internet --> 
+<html> 
+  <head> 
+    <title>Test harness</title> 
+    <script type="text/javascript" src="js/jquery.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script> 
+    <script type="text/javascript" src="js/garbochess.js"></script>
+    <script type="text/javascript" src="tests/openings.js"></script>
+	<script type="text/javascript" src="tests/perft-positions.js"></script> 
+    <script type="text/javascript" src="js/bench.js"></script>
+	<script type="text/javascript" src="js/boardui.js"></script> 
+	<script type="text/javascript" src="js/testing.js"></script> 
+
+	<script type="text/javascript">
+	    $(document).ready(function () {
+	        ResetGame();
+	        g_timeout = 1000000;
+	        //InitializeFromFen("r4r2/p1p4p/1p3kp1/2qn1BR1/8/3p3P/P3QP1K/8 w - -");
+	        InitializeFromFen("r4r1k/p1p5/1p4Q1/2qn1B2/8/3p3P/P4P1K/8 w - -");
+	        //InitializeFromFen("8/8/5k2/8/4K3/4P3/8/8 w - - 1 5");
+	        //InitializeFromFen("4k3/8/3K4/4P3/8/8/8/8 w - - 0 3 ");
+	        //SearchAndRedraw();
+	        //RedrawBoard();
+	        //SeeTests();
+	        // Debug code
+	        //SearchOther();
+	        //RunPerft();
+	        //g_timeout = 10000;
+	        PerfTests.benchmark();
+	        //TestGames();
+	        // End debug
+	    });
+    </script> 
+      <style type="text/css"> 
+          #FenTextBox {
+              width: 400px;
+          }
+      </style> 
+  </head> 
+  <body> 
+  	<center> 
+ 
+    <div id='board'> 
+    </div> 
+    <span id='output'>output</span><br/> 
+	<textarea cols='50' rows='6' id='PgnTextBox'></textarea><br/> 
+    FEN: <input id='FenTextBox'/> 
+	</center> 
+  </body> 
+</html> 

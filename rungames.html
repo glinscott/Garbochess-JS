@@ -1,0 +1,33 @@
+<!-- saved from url=(0014)about:internet --> 
+<html> 
+  <head> 
+    <title>Test harness</title> 
+    <script type="text/javascript" src="js/jquery.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script> 
+    <script type="text/javascript" src="js/garbochess.js"></script>
+    <script type="text/javascript" src="tests/openings.js"></script>
+	<script type="text/javascript" src="js/boardui.js"></script> 
+	<script type="text/javascript" src="js/tourney.js"></script> 
+	<script type="text/javascript">
+	    $(document).ready(function () {
+	        ResetGame();
+	        TestGames();
+	    });
+    </script> 
+      <style type="text/css"> 
+          #FenTextBox {
+              width: 400px;
+          }
+      </style> 
+  </head> 
+  <body> 
+  	<center> 
+ 
+    <div id='board'> 
+    </div> 
+    <span id='output'>output</span><br/> 
+	<textarea cols='50' rows='6' id='PgnTextBox'></textarea><br/> 
+    FEN: <input id='FenTextBox'/> 
+	</center> 
+  </body> 
+</html> 

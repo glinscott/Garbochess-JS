@@ -1,0 +1,50 @@
+<!-- saved from url=(0014)about:internet --> 
+<html> 
+  <head> 
+    <title>GarboChess Javascript</title> 
+    <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script> 
+    <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script> 
+    <script type="text/javascript" src="js/garbochess.js"></script>
+	<script type="text/javascript" src="js/boardui.js"></script>
+	<script type="text/javascript">
+	    $(document).ready(function () {
+	        g_timeout = 1000;
+	        UINewGame();
+	    });
+    </script> 
+      <style type="text/css">
+          #FenTextBox {
+              width: 400px;
+          }
+          #TimePerMove {
+              width: 50px;
+          }
+      </style> 
+  </head> 
+  <body> 
+    <div align="center">
+        <div>
+            <a href="javascript:UINewGame()">New game</a>
+            <select onchange="javascript:UIChangeStartPlayer()">
+                <option value="white">White</option>
+                <option value="black">Black</option>
+            </select>
+            Time per move: <input id="TimePerMove" value="1000" onchange="javascript:UIChangeTimePerMove()" />ms
+        </div>
+        <div style="margin-top:5px;">
+        <div id='board'></div> 
+        <span id='output'></span><br/> 
+	    <textarea cols='50' rows='6' id='PgnTextBox'></textarea><br/>
+        <div>
+            <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">Analysis: Off</a>
+        </div>
+        FEN: <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
+        </div>
+        <div>
+		<h2>About</h2>
+		<p>It started as a feasibility project to see how Javascript could do in Chess, then languished until Chrome came along.</p>
+		<a href="..\projects.html">Back to Projects</a>
+	</div>
+     </div> 
+  </body> 
+</html> 
