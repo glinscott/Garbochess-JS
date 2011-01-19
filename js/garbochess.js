@@ -17,11 +17,11 @@ var g_timeout = 40;
 
 function GetFen(){
     var result = "";
-    for (row = 0; row < 8; row++) {
+    for (var row = 0; row < 8; row++) {
         if (row != 0) 
             result += '/';
         var empty = 0;
-        for (col = 0; col < 8; col++) {
+        for (var col = 0; col < 8; col++) {
             var piece = g_board[((row + 2) << 4) + col + 4];
             if (piece == 0) {
                 empty++;
@@ -194,7 +194,6 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
 	g_globalPly++;
     g_nodeCount = 0;
     g_qNodeCount = 0;
-    g_collisions = 0;
     g_searchValid = true;
     
     var bestMove;
@@ -219,7 +218,6 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
             alpha = minEval;
             beta = maxEval;
             i--;
-            continue;
         }
 
         if (g_hashTable[g_hashKeyLow & g_hashMask] != null) {
@@ -574,7 +572,11 @@ function QSearch(alpha, beta, ply) {
     return realEval;
 }
 
-function StoreHash(value, flags, ply, move, force){
+function StoreHash(value, flags, ply, move, depth) {
+	if (value >= maxMateBuffer)
+		value += depth;
+	else if (value <= minMateBuffer)
+		value -= depth;
 	g_hashTable[g_hashKeyLow & g_hashMask] = new HashEntry(g_hashKeyHigh, value, flags, ply, move);
 }
 
@@ -790,17 +792,32 @@ function AllCutNode(ply, depth, beta, allowNull) {
     if (IsRepDraw())
         return 0;
 
+    // Mate distance pruning
+    if (minEval + depth >= beta)
+       return beta;
+
+    if (maxEval - (depth + 1) < beta)
+	return beta - 1;
+
     var hashMove = null;
     var hashNode = g_hashTable[g_hashKeyLow & g_hashMask];
     if (hashNode != null && hashNode.lock == g_hashKeyHigh) {
         hashMove = hashNode.bestMove;
         if (hashNode.hashDepth >= ply) {
+            var hashValue = hashNode.value;
+
+            // Fixup mate scores
+            if (hashValue >= maxMateBuffer)
+		hashValue -= depth;
+            else if (hashValue <= minMateBuffer)
+                hashValue += depth;
+
             if (hashNode.flags == hashflagExact)
-                return hashNode.value;
-            if (hashNode.flags == hashflagAlpha && hashNode.value < beta)
-                return hashNode.value;
-            if (hashNode.flags == hashflagBeta && hashNode.value >= beta)
-                return hashNode.value;
+                return hashValue;
+            if (hashNode.flags == hashflagAlpha && hashValue < beta)
+                return hashValue;
+            if (hashNode.flags == hashflagBeta && hashValue >= beta)
+                return hashValue;
         }
     }
 
@@ -935,7 +952,7 @@ function AllCutNode(ply, depth, beta, allowNull) {
 				    }
 				}
 
-                StoreHash(value, hashflagBeta, ply, currentMove, false);
+                StoreHash(value, hashflagBeta, ply, currentMove, depth);
                 return value;
             }
 
@@ -948,13 +965,13 @@ function AllCutNode(ply, depth, beta, allowNull) {
         // If we have no valid moves it's either stalemate or checkmate
         if (g_inCheck)
             // Checkmate.
-            return minEval + 1;
+            return minEval + depth;
         else 
             // Stalemate
             return 0;
     }
 
-    StoreHash(realEval, hashflagAlpha, ply, hashMove, false);
+    StoreHash(realEval, hashflagAlpha, ply, hashMove, depth);
     
     return realEval;
 }
@@ -968,6 +985,13 @@ function AlphaBeta(ply, depth, alpha, beta) {
 
     if (depth > 0 && IsRepDraw())
         return 0;
+
+    // Mate distance pruning
+    var oldAlpha = alpha;
+    alpha = alpha < minEval + depth ? alpha : minEval + depth;
+    beta = beta > maxEval - (depth + 1) ? beta : maxEval - (depth + 1);
+    if (alpha >= beta)
+       return alpha;
 
     var hashMove = null;
     var hashFlag = hashflagAlpha;
@@ -1034,11 +1058,11 @@ function AlphaBeta(ply, depth, alpha, beta) {
                     }
                 }
 
-                StoreHash(value, hashflagBeta, ply, currentMove, false);
+                StoreHash(value, hashflagBeta, ply, currentMove, depth);
                 return value;
             }
 
-            if (value > alpha) {
+            if (value > oldAlpha) {
                 hashFlag = hashflagExact;
                 alpha = value;
             }
@@ -1052,13 +1076,13 @@ function AlphaBeta(ply, depth, alpha, beta) {
         // If we have no valid moves it's either stalemate or checkmate
         if (inCheck) 
             // Checkmate.
-            return minEval + 1;
+            return minEval + depth;
         else 
             // Stalemate
             return 0;
     }
 
-    StoreHash(realEval, hashFlag, ply, hashMove, true);
+    StoreHash(realEval, hashFlag, ply, hashMove, depth);
     
     return realEval;
 }
