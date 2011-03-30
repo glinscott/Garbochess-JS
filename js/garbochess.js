@@ -2416,7 +2416,7 @@ function FinishMoveLocalTesting(bestMove, value, timeTaken, ply) {
 }
 
 var needsReset = true;
-onmessage = function (e) {
+self.onmessage = function (e) {
     if (e.data == "go" || needsReset) {
         ResetGame();
         needsReset = false;
