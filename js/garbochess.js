@@ -162,8 +162,10 @@ function PVFromHash(move, ply) {
     if (ply == 0) 
         return "";
 
-    if (move == 0)
-        return "checkmate";
+    if (move == 0) {
+	if (g_inCheck) return "checkmate";
+	return "stalemate";
+    }
     
     var pvString = " " + GetMoveSAN(move);
     MakeMove(move);
