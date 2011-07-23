@@ -196,7 +196,7 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
     g_qNodeCount = 0;
     g_searchValid = true;
     
-    var bestMove;
+    var bestMove = 0;
     var value;
     
     g_startTime = (new Date()).getTime();
@@ -224,7 +224,7 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
             bestMove = g_hashTable[g_hashKeyLow & g_hashMask].bestMove;
         }
 
-        if (finishPlyCallback != null) {
+        if (finishPlyCallback != null && bestMove != 0) {
             finishPlyCallback(bestMove, value, (new Date()).getTime() - g_startTime, i);
         }
     }
