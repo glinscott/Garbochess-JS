@@ -161,6 +161,9 @@ function GetMoveFromString(moveString) {
 function PVFromHash(move, ply) {
     if (ply == 0) 
         return "";
+
+    if (move == 0)
+        return "checkmate";
     
     var pvString = " " + GetMoveSAN(move);
     MakeMove(move);
@@ -224,7 +227,7 @@ function Search(finishMoveCallback, maxPly, finishPlyCallback) {
             bestMove = g_hashTable[g_hashKeyLow & g_hashMask].bestMove;
         }
 
-        if (finishPlyCallback != null && bestMove != 0) {
+        if (finishPlyCallback != null) {
             finishPlyCallback(bestMove, value, (new Date()).getTime() - g_startTime, i);
         }
     }
@@ -870,7 +873,7 @@ function AllCutNode(ply, depth, beta, allowNull) {
     }
 
     var moveMade = false;
-    var realEval = minEval;
+    var realEval = minEval - 1;
     var inCheck = g_inCheck;
 
     var movePicker = new MovePicker(hashMove, depth, g_killers[depth][0], g_killers[depth][1]);

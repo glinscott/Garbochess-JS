@@ -12,21 +12,20 @@
 	<script type="text/javascript" src="js/testing.js"></script> 
 
 	<script type="text/javascript">
+		function FinishPlyCallback(move) { console.log("depth:" + move); };
 	    $(document).ready(function () {
 	        ResetGame();
 	        g_timeout = 1000000;
 	        //InitializeFromFen("r4r2/p1p4p/1p3kp1/2qn1BR1/8/3p3P/P3QP1K/8 w - -");
-	        InitializeFromFen("r4r1k/p1p5/1p4Q1/2qn1B2/8/3p3P/P4P1K/8 w - -");
+	        InitializeFromFen("8/7R/p3k2B/Krn1p3/1p6/8/PP6/3R4 w - - 3 4");
 	        //InitializeFromFen("8/8/5k2/8/4K3/4P3/8/8 w - - 1 5");
 	        //InitializeFromFen("4k3/8/3K4/4P3/8/8/8/8 w - - 0 3 ");
-	        //SearchAndRedraw();
-	        //RedrawBoard();
-	        //SeeTests();
-	        // Debug code
-	        //SearchOther();
+
+		Search(null, 99, FinishPlyCallback);
+
 	        //RunPerft();
 	        //g_timeout = 10000;
-	        PerfTests.benchmark();
+	        //PerfTests.benchmark();
 	        //TestGames();
 	        // End debug
 	    });
