@@ -106,7 +106,7 @@ function GetMoveSAN(move, validMoves) {
 		} else {
 			result += FormatSquare(from);
 		}
-	} else if (pieceType == piecePawn && g_board[to] != 0) {
+	} else if (pieceType == piecePawn && (g_board[to] != 0 || (move & moveflagEPC))) {
 		result += FormatSquare(from).charAt(0);
 	}
 	
@@ -1528,7 +1528,9 @@ function InitializeFromFen(fen){
     
     g_enPassentSquare = -1;
     if (chunks[3].indexOf('-') == -1) {
-        g_enPassentSquare = parseInt(chunks[3], 16);
+	var col = chunks[3].charAt(0).charCodeAt() - 'a'.charCodeAt();
+	var row = 8 - (chunks[3].charAt(1).charCodeAt() - '0'.charCodeAt());
+	g_enPassentSquare = ((row + 2) * 0x10) + (col + 4);
     }
 
     var hashResult = SetHash();
