@@ -1,4 +1,5 @@
-var g_startOffset;
+var g_startOffset = null;
+var g_selectedPiece = null;
 var moveNumber = 1;
 
 var g_lastMove = null;
@@ -173,6 +174,76 @@ function RedrawBoard() {
 
     var guiTable = new Array();
 
+    var dropPiece = function (e, ui) {
+        var endX = e.clientX - $(table).offset().left;
+        var endY = e.clientY - $(table).offset().top;
+
+        endX = Math.floor(endX / cellSize);
+        endY = Math.floor(endY / cellSize);
+
+        var startX = Math.floor(g_startOffset.left / cellSize);
+        var startY = Math.floor(g_startOffset.top / cellSize);
+
+        if (!g_playerWhite) {
+            startY = 7 - startY;
+            endY = 7 - endY;
+            startX = 7 - startX;
+            endX = 7 - endX;
+        }
+
+        var moves = GenerateValidMoves();
+        var move = null;
+        for (var i = 0; i < moves.length; i++) {
+            if ((moves[i] & 0xFF) == MakeSquare(startY, startX) &&
+                ((moves[i] >> 8) & 0xFF) == MakeSquare(endY, endX)) {
+                move = moves[i];
+            }
+        }
+
+        if (!g_playerWhite) {
+            startY = 7 - startY;
+            endY = 7 - endY;
+            startX = 7 - startX;
+            endX = 7 - endX;
+        }
+
+        g_selectedPiece.style.left = 0;
+        g_selectedPiece.style.top = 0;
+
+        if (startX == endX && startY == endY) {
+            g_selectedPiece.style.backgroundColor = null;
+            g_selectedPiece = null;
+            return;
+        }
+
+        if (move != null) {
+            UpdatePgnTextBox(move);
+
+            g_lastMove = move;
+            MakeMove(move);
+
+            if ((move & moveflagCastleKing) ||
+                (move & moveflagCastleQueen) ||
+                (move & moveflagEPC) ||
+                (move & moveflagPromotion)) {
+                RedrawBoard();
+            } else {
+                g_selectedPiece.parentNode.removeChild(g_selectedPiece);
+                if (g_board[(move >> 8) & 0xFF] != 0) {
+                    $(guiTable[endY * 8 + endX]).empty();
+                }
+                guiTable[endY * 8 + endX].appendChild(g_selectedPiece);
+            }
+
+            var fen = GetFen();
+            document.getElementById("FenTextBox").value = fen;
+
+            setTimeout("SearchAndRedraw()", 0);
+        }
+
+        g_selectedPiece = null;
+    };
+
     for (y = 0; y < 8; ++y) {
         var tr = document.createElement("tr");
 
@@ -206,10 +277,25 @@ function RedrawBoard() {
                 td.appendChild(img);
 
                 $(img).draggable({ start: function (e, ui) {
-                    g_startOffset = new Object();
-                    g_startOffset.left = e.clientX - $(table).offset().left;
-                    g_startOffset.top = e.clientY - $(table).offset().top;
-                }
+                    if (g_selectedPiece === null) {
+                        g_selectedPiece = e.target;
+                        g_startOffset = {
+                            left: e.clientX - $(table).offset().left,
+                            top: e.clientY - $(table).offset().top
+                        };
+                    }
+                }});
+
+                $(img).click(function(e) {
+                    if (g_selectedPiece === null) {
+                        g_startOffset = {
+                            left: e.clientX - $(table).offset().left,
+                            top: e.clientY - $(table).offset().top
+                        };
+                        e.stopPropagation();
+                        g_selectedPiece = e.target;
+                        g_selectedPiece.style.backgroundColor = 'blue';
+                    }
                 });
             }
 
@@ -230,63 +316,12 @@ function RedrawBoard() {
 
     table.appendChild(tbody);
 
-    $(table).droppable({ drop: function (e, ui) {
-        // TODO: this may be buggy?
-        var endX = e.clientX - $(table).offset().left;
-        var endY = e.clientY - $(table).offset().top;
-
-        endX = Math.floor(endX / cellSize);
-        endY = Math.floor(endY / cellSize);
-
-        var startX = Math.floor(g_startOffset.left / cellSize);
-        var startY = Math.floor(g_startOffset.top / cellSize);
-
-        if (!g_playerWhite) {
-            startY = 7 - startY;
-            endY = 7 - endY;
-            startX = 7 - startX;
-            endX = 7 - endX;
+    $(table).droppable({ drop: dropPiece });
+    $(table).click(function(e) {
+        if (g_selectedPiece !== null) {
+            dropPiece(e);
         }
-
-        var moves = GenerateValidMoves();
-        var move = null;
-        for (var i = 0; i < moves.length; i++) {
-            if ((moves[i] & 0xFF) == MakeSquare(startY, startX) &&
-                ((moves[i] >> 8) & 0xFF) == MakeSquare(endY, endX)) {
-                move = moves[i];
-            }
-        }
-
-        if (!g_playerWhite) {
-            startY = 7 - startY;
-            endY = 7 - endY;
-            startX = 7 - startX;
-            endX = 7 - endX;
-        }
-
-        var img = ui.helper.get(0);
-        img.style.left = 0;
-        img.style.top = 0;
-
-        if (move != null) {
-            UpdatePgnTextBox(move);
-
-            g_lastMove = move;
-            MakeMove(move);
-            img.parentNode.removeChild(img);
-
-            if (g_board[(move >> 8) & 0xFF] != 0) {
-                $(guiTable[endY * 8 + endX]).empty();
-            }
-            guiTable[endY * 8 + endX].appendChild(img);
-
-            var fen = GetFen();
-            document.getElementById("FenTextBox").value = fen;
-
-            setTimeout("SearchAndRedraw()", 0);
-        }
-    }
-    });
+    })
 
     div.appendChild(table);
 
