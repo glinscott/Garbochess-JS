@@ -162,7 +162,6 @@ function InitializeBackgroundEngine() {
 
 function RedrawBoard() {
     var div = $("#board")[0];
-    $("#board").empty();
 
     var table = document.createElement("table");
     table.cellPadding = "0px";
@@ -331,7 +330,7 @@ function RedrawBoard() {
         }
     })
 
-    div.appendChild(table);
+    $("#board").replaceWith(table);
 
     g_changingFen = true;
     document.getElementById("FenTextBox").value = GetFen();
