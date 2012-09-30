@@ -267,38 +267,40 @@ function RedrawBoard() {
             if (pieceName != null) {
                 pieceName += "_";
                 pieceName += (piece & 0x8) ? "white" : "black";
-                pieceName += ".png";
             }
 
             if (pieceName != null) {
-                var img = document.createElement("img");
-                img.src = "img/" + pieceName;
+                var img = document.createElement("div");
+                $(img).addClass('sprite-' + pieceName);
+                img.style.backgroundImage = "url('img/sprites.png')";
                 img.width = cellSize;
                 img.height = cellSize;
-                td.appendChild(img);
+                var divimg = document.createElement("div");
+                divimg.appendChild(img);
+                td.appendChild(divimg);
 
-                $(img).draggable({ start: function (e, ui) {
+                $(divimg).draggable({ start: function (e, ui) {
                     if (g_selectedPiece === null) {
-                        g_selectedPiece = e.target;
+                        g_selectedPiece = this;
                         g_startOffset = {
                             left: e.pageX - $(table).offset().left,
                             top: e.pageY - $(table).offset().top
                         };
                     } else {
-                        return g_selectedPiece == e.target;
+                        return g_selectedPiece == this;
                     }
                 }});
 
-                $(img).mousedown(function(e) {
+                $(divimg).mousedown(function(e) {
                     if (g_selectedPiece === null) {
                         g_startOffset = {
                             left: e.pageX - $(table).offset().left,
                             top: e.pageY - $(table).offset().top
                         };
                         e.stopPropagation();
-                        g_selectedPiece = e.target;
+                        g_selectedPiece = this;
                         g_selectedPiece.style.backgroundImage = "url('img/transpBlue50.png')";
-                    } else if (g_selectedPiece == e.target) {
+                    } else if (g_selectedPiece === this) {
                         g_selectedPiece.style.backgroundImage = null;
                         g_selectedPiece = null;
                     }
