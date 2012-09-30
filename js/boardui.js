@@ -330,7 +330,8 @@ function RedrawBoard() {
         }
     })
 
-    $("#board").replaceWith(table);
+    $(div).empty();
+    div.appendChild(table);
 
     g_changingFen = true;
     document.getElementById("FenTextBox").value = GetFen();
