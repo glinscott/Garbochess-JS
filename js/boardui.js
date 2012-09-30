@@ -307,10 +307,10 @@ function RedrawBoard() {
 
             var bgColor = (y ^ x) & 1;
             if (bgColor) {
-                td.style.backgroundColor = "#888888";
+                td.style.backgroundColor = "#D18947";
             }
             else {
-                td.style.backgroundColor = "#FFFFFF";
+                td.style.backgroundColor = "#FFCE9E";
             }
 
             tr.appendChild(td);
