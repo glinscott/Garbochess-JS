@@ -175,8 +175,8 @@ function RedrawBoard() {
     var guiTable = new Array();
 
     var dropPiece = function (e, ui) {
-        var endX = e.clientX - $(table).offset().left;
-        var endY = e.clientY - $(table).offset().top;
+        var endX = e.pageX - $(table).offset().left;
+        var endY = e.pageY - $(table).offset().top;
 
         endX = Math.floor(endX / cellSize);
         endY = Math.floor(endY / cellSize);
@@ -207,11 +207,12 @@ function RedrawBoard() {
             endX = 7 - endX;
         }
 
+
         g_selectedPiece.style.left = 0;
         g_selectedPiece.style.top = 0;
 
         if (startX == endX && startY == endY) {
-            g_selectedPiece.style.backgroundColor = null;
+            g_selectedPiece.style.backgroundImage = null;
             g_selectedPiece = null;
             return;
         }
@@ -239,9 +240,9 @@ function RedrawBoard() {
             document.getElementById("FenTextBox").value = fen;
 
             setTimeout("SearchAndRedraw()", 0);
-        }
 
-        g_selectedPiece = null;
+            g_selectedPiece = null;
+        }
     };
 
     for (y = 0; y < 8; ++y) {
@@ -280,21 +281,26 @@ function RedrawBoard() {
                     if (g_selectedPiece === null) {
                         g_selectedPiece = e.target;
                         g_startOffset = {
-                            left: e.clientX - $(table).offset().left,
-                            top: e.clientY - $(table).offset().top
+                            left: e.pageX - $(table).offset().left,
+                            top: e.pageY - $(table).offset().top
                         };
+                    } else {
+                        return g_selectedPiece == e.target;
                     }
                 }});
 
-                $(img).click(function(e) {
+                $(img).mousedown(function(e) {
                     if (g_selectedPiece === null) {
                         g_startOffset = {
-                            left: e.clientX - $(table).offset().left,
-                            top: e.clientY - $(table).offset().top
+                            left: e.pageX - $(table).offset().left,
+                            top: e.pageY - $(table).offset().top
                         };
                         e.stopPropagation();
                         g_selectedPiece = e.target;
-                        g_selectedPiece.style.backgroundColor = 'blue';
+                        g_selectedPiece.style.backgroundImage = "url('img/transpBlue50.png')";
+                    } else if (g_selectedPiece == e.target) {
+                        g_selectedPiece.style.backgroundImage = null;
+                        g_selectedPiece = null;
                     }
                 });
             }
@@ -317,7 +323,7 @@ function RedrawBoard() {
     table.appendChild(tbody);
 
     $(table).droppable({ drop: dropPiece });
-    $(table).click(function(e) {
+    $(table).mousedown(function(e) {
         if (g_selectedPiece !== null) {
             dropPiece(e);
         }
