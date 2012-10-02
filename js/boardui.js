@@ -260,6 +260,7 @@ function RedrawBoard() {
     var table = document.createElement("table");
     table.cellPadding = "0px";
     table.cellSpacing = "0px";
+    $(table).addClass('no-highlight');
 
     var tbody = document.createElement("tbody");
 
