@@ -7,6 +7,9 @@ var g_playerWhite = true;
 var g_changingFen = false;
 var g_analyzing = false;
 
+var g_uiBoard;
+var g_cellSize = 45;
+
 function UINewGame() {
     moveNumber = 1;
 
@@ -19,11 +22,10 @@ function UINewGame() {
         g_backgroundEngine.postMessage("go");
     }
     g_lastMove = null;
+    RedrawBoard();
 
     if (!g_playerWhite) {
         SearchAndRedraw();
-    } else {
-        RedrawBoard();
     }
 }
 
@@ -97,6 +99,8 @@ function UIPlayMove(move, pv) {
     MakeMove(move);
 
     UpdatePVDisplay(pv);
+
+    UpdateFromMove(move);
 }
 
 function UpdatePVDisplay(pv) {
@@ -125,7 +129,6 @@ function SearchAndRedraw() {
         g_backgroundEngine.postMessage("search " + g_timeout);
     } else {
 	    Search(FinishMove, 99, null);
-	    setTimeout("RedrawBoard()", 100);
     }
 }
 
@@ -146,7 +149,6 @@ function InitializeBackgroundEngine() {
                     UpdatePVDisplay(e.data.substr(3, e.data.length - 3));
                 } else {
                     UIPlayMove(GetMoveFromString(e.data), null);
-                    RedrawBoard();
                 }
             }
             g_backgroundEngine.error = function (e) {
@@ -160,6 +162,98 @@ function InitializeBackgroundEngine() {
     return g_backgroundEngineValid;
 }
 
+function UpdateFromMove(move) {
+    var fromX = (move & 0xF) - 4;
+    var fromY = ((move >> 4) & 0xF) - 2;
+    var toX = ((move >> 8) & 0xF) - 4;
+    var toY = ((move >> 12) & 0xF) - 2;
+
+    if (!g_playerWhite) {
+        fromY = 7 - fromY;
+        toY = 7 - toY;
+        fromX = 7 - fromX;
+        toX = 7 - toX;
+    }
+
+    if ((move & moveflagCastleKing) ||
+        (move & moveflagCastleQueen) ||
+        (move & moveflagEPC) ||
+        (move & moveflagPromotion)) {
+        RedrawPieces();
+    } else {
+        var fromSquare = g_uiBoard[fromY * 8 + fromX];
+        $(g_uiBoard[toY * 8 + toX])
+            .empty()
+            .append($(fromSquare).children());
+    }
+}
+
+function RedrawPieces() {
+    for (y = 0; y < 8; ++y) {
+        for (x = 0; x < 8; ++x) {
+            var td = g_uiBoard[y * 8 + x];
+            var pieceY = g_playerWhite ? y : 7 - y;
+            var piece = g_board[((pieceY + 2) * 0x10) + (g_playerWhite ? x : 7 - x) + 4];
+            var pieceName = null;
+            switch (piece & 0x7) {
+                case piecePawn: pieceName = "pawn"; break;
+                case pieceKnight: pieceName = "knight"; break;
+                case pieceBishop: pieceName = "bishop"; break;
+                case pieceRook: pieceName = "rook"; break;
+                case pieceQueen: pieceName = "queen"; break;
+                case pieceKing: pieceName = "king"; break;
+            }
+            if (pieceName != null) {
+                pieceName += "_";
+                pieceName += (piece & 0x8) ? "white" : "black";
+            }
+
+            if (pieceName != null) {
+                var img = document.createElement("div");
+                $(img).addClass('sprite-' + pieceName);
+                img.style.backgroundImage = "url('img/sprites.png')";
+                img.width = g_cellSize;
+                img.height = g_cellSize;
+                var divimg = document.createElement("div");
+                divimg.appendChild(img);
+
+                $(divimg).draggable({ start: function (e, ui) {
+                    if (g_selectedPiece === null) {
+                        g_selectedPiece = this;
+                        var offset = $(this).closest('table').offset();
+                        g_startOffset = {
+                            left: e.pageX - offset.left,
+                            top: e.pageY - offset.top
+                        };
+                    } else {
+                        return g_selectedPiece == this;
+                    }
+                }});
+
+                $(divimg).mousedown(function(e) {
+                    if (g_selectedPiece === null) {
+                        var offset = $(this).closest('table').offset();
+                        g_startOffset = {
+                            left: e.pageX - offset.left,
+                            top: e.pageY - offset.top
+                        };
+                        e.stopPropagation();
+                        g_selectedPiece = this;
+                        g_selectedPiece.style.backgroundImage = "url('img/transpBlue50.png')";
+                    } else if (g_selectedPiece === this) {
+                        g_selectedPiece.style.backgroundImage = null;
+                        g_selectedPiece = null;
+                    }
+                });
+
+                $(td).empty().append(divimg);
+            } else {
+                $(td).empty();
+            }
+        }
+    }
+}
+
 function RedrawBoard() {
     var div = $("#board")[0];
 
@@ -169,19 +263,17 @@ function RedrawBoard() {
 
     var tbody = document.createElement("tbody");
 
-    var cellSize = 45;
-
-    var guiTable = new Array();
+    g_uiBoard = [];
 
     var dropPiece = function (e, ui) {
         var endX = e.pageX - $(table).offset().left;
         var endY = e.pageY - $(table).offset().top;
 
-        endX = Math.floor(endX / cellSize);
-        endY = Math.floor(endY / cellSize);
+        endX = Math.floor(endX / g_cellSize);
+        endY = Math.floor(endY / g_cellSize);
 
-        var startX = Math.floor(g_startOffset.left / cellSize);
-        var startY = Math.floor(g_startOffset.top / cellSize);
+        var startX = Math.floor(g_startOffset.left / g_cellSize);
+        var startY = Math.floor(g_startOffset.top / g_cellSize);
 
         if (!g_playerWhite) {
             startY = 7 - startY;
@@ -206,7 +298,6 @@ function RedrawBoard() {
             endX = 7 - endX;
         }
 
-
         g_selectedPiece.style.left = 0;
         g_selectedPiece.style.top = 0;
 
@@ -222,25 +313,15 @@ function RedrawBoard() {
             g_lastMove = move;
             MakeMove(move);
 
-            if ((move & moveflagCastleKing) ||
-                (move & moveflagCastleQueen) ||
-                (move & moveflagEPC) ||
-                (move & moveflagPromotion)) {
-                RedrawBoard();
-            } else {
-                g_selectedPiece.parentNode.removeChild(g_selectedPiece);
-                if (g_board[(move >> 8) & 0xFF] != 0) {
-                    $(guiTable[endY * 8 + endX]).empty();
-                }
-                guiTable[endY * 8 + endX].appendChild(g_selectedPiece);
-            }
+            UpdateFromMove(move);
+
+            g_selectedPiece.style.backgroundImage = null;
+            g_selectedPiece = null;
 
             var fen = GetFen();
             document.getElementById("FenTextBox").value = fen;
 
             setTimeout("SearchAndRedraw()", 0);
-
-            g_selectedPiece = null;
         }
     };
 
@@ -249,73 +330,11 @@ function RedrawBoard() {
 
         for (x = 0; x < 8; ++x) {
             var td = document.createElement("td");
-            td.style.width = cellSize + "px";
-            td.style.height = cellSize + "px";
-
-            var pieceY = g_playerWhite ? y : 7 - y;
-            var piece = g_board[((pieceY + 2) * 0x10) + (g_playerWhite ? x : 7 - x) + 4];
-            var pieceName = null;
-            switch (piece & 0x7) {
-                case piecePawn: pieceName = "pawn"; break;
-                case pieceKnight: pieceName = "knight"; break;
-                case pieceBishop: pieceName = "bishop"; break;
-                case pieceRook: pieceName = "rook"; break;
-                case pieceQueen: pieceName = "queen"; break;
-                case pieceKing: pieceName = "king"; break;
-            }
-            if (pieceName != null) {
-                pieceName += "_";
-                pieceName += (piece & 0x8) ? "white" : "black";
-            }
-
-            if (pieceName != null) {
-                var img = document.createElement("div");
-                $(img).addClass('sprite-' + pieceName);
-                img.style.backgroundImage = "url('img/sprites.png')";
-                img.width = cellSize;
-                img.height = cellSize;
-                var divimg = document.createElement("div");
-                divimg.appendChild(img);
-                td.appendChild(divimg);
-
-                $(divimg).draggable({ start: function (e, ui) {
-                    if (g_selectedPiece === null) {
-                        g_selectedPiece = this;
-                        g_startOffset = {
-                            left: e.pageX - $(table).offset().left,
-                            top: e.pageY - $(table).offset().top
-                        };
-                    } else {
-                        return g_selectedPiece == this;
-                    }
-                }});
-
-                $(divimg).mousedown(function(e) {
-                    if (g_selectedPiece === null) {
-                        g_startOffset = {
-                            left: e.pageX - $(table).offset().left,
-                            top: e.pageY - $(table).offset().top
-                        };
-                        e.stopPropagation();
-                        g_selectedPiece = this;
-                        g_selectedPiece.style.backgroundImage = "url('img/transpBlue50.png')";
-                    } else if (g_selectedPiece === this) {
-                        g_selectedPiece.style.backgroundImage = null;
-                        g_selectedPiece = null;
-                    }
-                });
-            }
-
-            var bgColor = (y ^ x) & 1;
-            if (bgColor) {
-                td.style.backgroundColor = "#D18947";
-            }
-            else {
-                td.style.backgroundColor = "#FFCE9E";
-            }
-
+            td.style.width = g_cellSize + "px";
+            td.style.height = g_cellSize + "px";
+            td.style.backgroundColor = ((y ^ x) & 1) ? "#D18947" : "#FFCE9E";
             tr.appendChild(td);
-            guiTable[y * 8 + x] = td;
+            g_uiBoard[y * 8 + x] = td;
         }
 
         tbody.appendChild(tr);
@@ -328,7 +347,9 @@ function RedrawBoard() {
         if (g_selectedPiece !== null) {
             dropPiece(e);
         }
-    })
+    });
+
+    RedrawPieces();
 
     $(div).empty();
     div.appendChild(table);
