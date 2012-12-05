@@ -302,13 +302,7 @@ function RedrawBoard() {
         g_selectedPiece.style.left = 0;
         g_selectedPiece.style.top = 0;
 
-        if (startX == endX && startY == endY) {
-            g_selectedPiece.style.backgroundImage = null;
-            g_selectedPiece = null;
-            return;
-        }
-
-        if (move != null) {
+        if (startX != endX && startY != endY && move != null) {
             UpdatePgnTextBox(move);
 
             g_lastMove = move;
