@@ -340,7 +340,7 @@ function RedrawBoard() {
 
     table.appendChild(tbody);
 
-    $(table).droppable({ drop: dropPiece });
+    $('body').droppable({ drop: dropPiece });
     $(table).mousedown(function(e) {
         if (g_selectedPiece !== null) {
             dropPiece(e);
