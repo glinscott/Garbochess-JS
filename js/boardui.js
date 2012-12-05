@@ -323,6 +323,9 @@ function RedrawBoard() {
             document.getElementById("FenTextBox").value = fen;
 
             setTimeout("SearchAndRedraw()", 0);
+        } else {
+            g_selectedPiece.style.backgroundImage = null;
+            g_selectedPiece = null;
         }
     };
 
