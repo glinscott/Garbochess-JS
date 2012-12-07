@@ -302,13 +302,7 @@ function RedrawBoard() {
         g_selectedPiece.style.left = 0;
         g_selectedPiece.style.top = 0;
 
-        if (startX == endX && startY == endY) {
-            g_selectedPiece.style.backgroundImage = null;
-            g_selectedPiece = null;
-            return;
-        }
-
-        if (move != null) {
+        if (!(startX == endX && startY == endY) && move != null) {
             UpdatePgnTextBox(move);
 
             g_lastMove = move;
@@ -323,6 +317,9 @@ function RedrawBoard() {
             document.getElementById("FenTextBox").value = fen;
 
             setTimeout("SearchAndRedraw()", 0);
+        } else {
+            g_selectedPiece.style.backgroundImage = null;
+            g_selectedPiece = null;
         }
     };
 
@@ -343,7 +340,7 @@ function RedrawBoard() {
 
     table.appendChild(tbody);
 
-    $(table).droppable({ drop: dropPiece });
+    $('body').droppable({ drop: dropPiece });
     $(table).mousedown(function(e) {
         if (g_selectedPiece !== null) {
             dropPiece(e);
