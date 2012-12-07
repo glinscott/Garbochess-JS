@@ -50,6 +50,10 @@ Version 5.1
 -----------
 - Bugfix to hashtable storing (no elo change, but big help in endgames)
 
+Version 6.0
+-----------
+- Reward attacks on pieces more heavily (+20)
+- 
 
 TODO:
 -----

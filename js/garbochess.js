@@ -1421,11 +1421,11 @@ function InitializeEval() {
         g_mobUnit[i][0] = 1;
         g_mobUnit[i][0x80] = 0;
         g_mobUnit[i][enemy | piecePawn] = 1;
-        g_mobUnit[i][enemy | pieceBishop] = 1;
-        g_mobUnit[i][enemy | pieceKnight] = 1;
-        g_mobUnit[i][enemy | pieceRook] = 1;
-        g_mobUnit[i][enemy | pieceQueen] = 1;
-        g_mobUnit[i][enemy | pieceKing] = 1;
+        g_mobUnit[i][enemy | pieceBishop] = 2;
+        g_mobUnit[i][enemy | pieceKnight] = 2;
+        g_mobUnit[i][enemy | pieceRook] = 4;
+        g_mobUnit[i][enemy | pieceQueen] = 6;
+        g_mobUnit[i][enemy | pieceKing] = 8;
         g_mobUnit[i][friend | piecePawn] = 0;
         g_mobUnit[i][friend | pieceBishop] = 0;
         g_mobUnit[i][friend | pieceKnight] = 0;
