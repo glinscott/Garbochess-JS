@@ -392,37 +392,13 @@ function Mobility(color) {
     pieceIdx = (color | 4) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 1; while (g_board[to] == 0) { to--; mob++;}
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
-          mob++;
-          to--; while (g_board[to] == 0) to--;
-          mob += mobUnit[g_board[to]] << 2;
-        }
-
-        to = from + 1; while (g_board[to] == 0) { to++; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
-          mob++;
-          to++; while (g_board[to] == 0) to++;
-          mob += mobUnit[g_board[to]] << 2;
-        }
-
-        to = from + 16; while (g_board[to] == 0) { to += 16; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
-          mob++;
-          to += 16; while (g_board[to] == 0) to += 16;
-          mob += mobUnit[g_board[to]] << 2; 
-        }
-
-        to = from - 16; while (g_board[to] == 0) { to -= 16; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
-          mob++;
-          to -= 16; while (g_board[to] == 0) to -= 16;
-          mob += mobUnit[g_board[to]] << 2; 
-        }
-
+        to = from - 1; while (g_board[to] == 0) { to--; mob++;}  if (g_board[to] & enemy) mob++;
+        to = from + 1; while (g_board[to] == 0) { to++; mob++; } if (g_board[to] & enemy) mob++;
+        to = from + 16; while (g_board[to] == 0) { to += 16; mob++; } if (g_board[to] & enemy) mob++;
+        to = from - 16; while (g_board[to] == 0) { to -= 16; mob++; } if (g_board[to] & enemy) mob++;
         from = g_pieceList[pieceIdx++];
     }
-    result += 20 * mob;
+    result += 25 * mob;
 
     // Queen mobility
     mob = -2;
