@@ -356,31 +356,39 @@ function Mobility(color) {
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
         to = from - 15; while (g_board[to] == 0) { to -= 15; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+        if (g_board[to] & enemy) {
           mob++;
-          to -= 15; while (g_board[to] == 0) to -= 15;
-          mob += mobUnit[g_board[to]] << 2;
+          if (!(g_board[to] & piecePawn)) {
+            to -= 15; while (g_board[to] == 0) to -= 15;
+            mob += mobUnit[g_board[to]] << 2;
+          }
         }
 
         to = from - 17; while (g_board[to] == 0) { to -= 17; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+        if (g_board[to] & enemy) {
           mob++;
-          to -= 17; while (g_board[to] == 0) to -= 17;
-          mob += mobUnit[g_board[to]] << 2; 
+          if (!(g_board[to] & piecePawn)) {
+            to -= 17; while (g_board[to] == 0) to -= 17;
+            mob += mobUnit[g_board[to]] << 2; 
+          }
         }
 
         to = from + 15; while (g_board[to] == 0) { to += 15; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+        if (g_board[to] & enemy) {
           mob++;
-          to += 15; while (g_board[to] == 0) to += 15;
-          mob += mobUnit[g_board[to]] << 2; 
+          if (!(g_board[to] & piecePawn)) {
+            to += 15; while (g_board[to] == 0) to += 15;
+            mob += mobUnit[g_board[to]] << 2; 
+          }
         }
 
         to = from + 17; while (g_board[to] == 0) { to += 17; mob++; }
-        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+        if (g_board[to] & enemy) {
           mob++;
-          to += 17; while (g_board[to] == 0) to += 17;
-          mob += mobUnit[g_board[to]] << 2; 
+          if (!(g_board[to] & piecePawn)) {
+            to += 17; while (g_board[to] == 0) to += 17;
+            mob += mobUnit[g_board[to]] << 2;
+          }
         }
 
         from = g_pieceList[pieceIdx++];
@@ -1449,7 +1457,7 @@ function InitializeEval() {
         g_mobUnit[i][enemy | pieceKnight] = 2;
         g_mobUnit[i][enemy | pieceRook] = 4;
         g_mobUnit[i][enemy | pieceQueen] = 6;
-        g_mobUnit[i][enemy | pieceKing] = 8;
+        g_mobUnit[i][enemy | pieceKing] = 10;
         g_mobUnit[i][friend | piecePawn] = 0;
         g_mobUnit[i][friend | pieceBishop] = 0;
         g_mobUnit[i][friend | pieceKnight] = 0;
