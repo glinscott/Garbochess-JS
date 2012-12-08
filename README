@@ -52,8 +52,8 @@ Version 5.1
 
 Version 6.0
 -----------
-- Reward attacks on pieces more heavily (+20)
-- 
+- Bonuses for knight attacking pieces (+20)
+- Bonus for bishop pins (+20)
 
 TODO:
 -----

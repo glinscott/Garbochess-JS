@@ -355,13 +355,37 @@ function Mobility(color) {
     pieceIdx = (color | 3) << 4;
     from = g_pieceList[pieceIdx++];
     while (from != 0) {
-        to = from - 15; while (g_board[to] == 0) { to -= 15; mob++; } if (g_board[to] & enemy) mob++;
-        to = from - 17; while (g_board[to] == 0) { to -= 17; mob++; } if (g_board[to] & enemy) mob++;
-        to = from + 15; while (g_board[to] == 0) { to += 15; mob++; } if (g_board[to] & enemy) mob++;
-        to = from + 17; while (g_board[to] == 0) { to += 17; mob++; } if (g_board[to] & enemy) mob++;
+        to = from - 15; while (g_board[to] == 0) { to -= 15; mob++; }
+        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+          mob++;
+          to -= 15; while (g_board[to] == 0) to -= 15;
+          mob += mobUnit[g_board[to]] << 2;
+        }
+
+        to = from - 17; while (g_board[to] == 0) { to -= 17; mob++; }
+        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+          mob++;
+          to -= 17; while (g_board[to] == 0) to -= 17;
+          mob += mobUnit[g_board[to]] << 2; 
+        }
+
+        to = from + 15; while (g_board[to] == 0) { to += 15; mob++; }
+        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+          mob++;
+          to += 15; while (g_board[to] == 0) to += 15;
+          mob += mobUnit[g_board[to]] << 2; 
+        }
+
+        to = from + 17; while (g_board[to] == 0) { to += 17; mob++; }
+        if ((g_board[to] & enemy) && !(g_board[to] & piecePawn)) {
+          mob++;
+          to += 17; while (g_board[to] == 0) to += 17;
+          mob += mobUnit[g_board[to]] << 2; 
+        }
+
         from = g_pieceList[pieceIdx++];
     }
-    result += 50 * mob;
+    result += 44 * mob;
 
     // Rook mobility
     mob = -4;
