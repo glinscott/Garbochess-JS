@@ -2,7 +2,7 @@ var g_startOffset = null;
 var g_selectedPiece = null;
 var moveNumber = 1;
 
-var g_lastMove = null;
+var g_allMoves = [];
 var g_playerWhite = true;
 var g_changingFen = false;
 var g_analyzing = false;
@@ -21,7 +21,7 @@ function UINewGame() {
     if (InitializeBackgroundEngine()) {
         g_backgroundEngine.postMessage("go");
     }
-    g_lastMove = null;
+    g_allMoves = [];
     RedrawBoard();
 
     if (!g_playerWhite) {
@@ -54,11 +54,11 @@ function UIChangeFEN() {
     if (!g_changingFen) {
         var fenTextBox = document.getElementById("FenTextBox");
         InitializeFromFen(fenTextBox.value);
+        g_allMoves = [];
+
         EnsureAnalysisStopped();
-        if (InitializeBackgroundEngine()) {
-            g_backgroundEngine.postMessage("go");
-            g_backgroundEngine.postMessage("position " + GetFen());
-        }
+        InitializeBackgroundEngine();
+
         g_playerWhite = !!g_toMove;
         RedrawBoard();
     }
@@ -86,8 +86,7 @@ function UIChangeTimePerMove() {
 function FinishMove(bestMove, value, timeTaken, ply) {
     if (bestMove != null) {
         UIPlayMove(bestMove, BuildPVMessage(bestMove, value, timeTaken, ply));
-    }
-    else {
+    } else {
         alert("Checkmate!");
     }
 }
@@ -95,12 +94,33 @@ function FinishMove(bestMove, value, timeTaken, ply) {
 function UIPlayMove(move, pv) {
     UpdatePgnTextBox(move);
 
-    g_lastMove = move;
+    g_allMoves[g_allMoves.length] = move;
     MakeMove(move);
 
     UpdatePVDisplay(pv);
 
     UpdateFromMove(move);
+}
+
+function UIUndoMove() {
+  if (g_allMoves.length == 0) {
+    return;
+  }
+
+  if (g_backgroundEngine != null) {
+    g_backgroundEngine.terminate();
+    g_backgroundEngine = null;
+  }
+
+  UnmakeMove(g_allMoves[g_allMoves.length - 1]);
+  g_allMoves.pop();
+
+  if (g_playerWhite != !!g_toMove && g_allMoves.length != 0) {
+    UnmakeMove(g_allMoves[g_allMoves.length - 1]);
+    g_allMoves.pop();
+  }
+
+  RedrawBoard();
 }
 
 function UpdatePVDisplay(pv) {
@@ -123,12 +143,9 @@ function SearchAndRedraw() {
     }
 
     if (InitializeBackgroundEngine()) {
-        if (g_lastMove != null) {
-            g_backgroundEngine.postMessage(FormatMove(g_lastMove));
-        }
         g_backgroundEngine.postMessage("search " + g_timeout);
     } else {
-	    Search(FinishMove, 99, null);
+	Search(FinishMove, 99, null);
     }
 }
 
@@ -154,6 +171,7 @@ function InitializeBackgroundEngine() {
             g_backgroundEngine.error = function (e) {
                 alert("Error from background worker:" + e.message);
             }
+            g_backgroundEngine.postMessage("position " + GetFen());
         } catch (error) {
             g_backgroundEngineValid = false;
         }
@@ -305,7 +323,11 @@ function RedrawBoard() {
         if (!(startX == endX && startY == endY) && move != null) {
             UpdatePgnTextBox(move);
 
-            g_lastMove = move;
+            if (InitializeBackgroundEngine()) {
+                g_backgroundEngine.postMessage(FormatMove(move));
+            }
+
+            g_allMoves[g_allMoves.length] = move;
             MakeMove(move);
 
             UpdateFromMove(move);
