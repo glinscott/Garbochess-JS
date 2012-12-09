@@ -549,6 +549,8 @@ function QSearch(alpha, beta, ply) {
         }
     }
 
+    /* Disable checks...  Too slow currently
+
     if (ply == 0 && !wasInCheck) {
         moves = new Array();
         GenerateAllMoves(moves);
@@ -605,6 +607,7 @@ function QSearch(alpha, beta, ply) {
             }
         }
     }
+    */
 
     return realEval;
 }
