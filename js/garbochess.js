@@ -1457,7 +1457,7 @@ function InitializeEval() {
         g_mobUnit[i][enemy | pieceKnight] = 2;
         g_mobUnit[i][enemy | pieceRook] = 4;
         g_mobUnit[i][enemy | pieceQueen] = 6;
-        g_mobUnit[i][enemy | pieceKing] = 10;
+        g_mobUnit[i][enemy | pieceKing] = 6;
         g_mobUnit[i][friend | piecePawn] = 0;
         g_mobUnit[i][friend | pieceBishop] = 0;
         g_mobUnit[i][friend | pieceKnight] = 0;
