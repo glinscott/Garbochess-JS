@@ -60,6 +60,8 @@ function UIChangeFEN() {
         InitializeBackgroundEngine();
 
         g_playerWhite = !!g_toMove;
+        g_backgroundEngine.postMessage("position " + GetFen());
+
         RedrawBoard();
     }
 }
