@@ -37,6 +37,11 @@ function EnsureAnalysisStopped() {
 }
 
 function UIAnalyzeToggle() {
+    if (GenerateValidMoves().length == 0) {
+        UpdatePVDisplay(g_inCheck ? "Checkmate" : "Stalemate");
+        return;
+    }
+
     if (InitializeBackgroundEngine()) {
         if (!g_analyzing) {
             g_backgroundEngine.postMessage("analyze");
