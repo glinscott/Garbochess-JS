@@ -53,7 +53,13 @@ function UIAnalyzeToggle() {
 function UIChangeFEN() {
     if (!g_changingFen) {
         var fenTextBox = document.getElementById("FenTextBox");
-        InitializeFromFen(fenTextBox.value);
+        var result = InitializeFromFen(fenTextBox.value);
+        if (result.length != 0) {
+            UpdatePVDisplay(result);
+            return;
+        } else {
+            UpdatePVDisplay('');
+        }
         g_allMoves = [];
 
         EnsureAnalysisStopped();

@@ -1618,7 +1618,7 @@ function InitializeFromFen(fen) {
         return g_inCheck ? 'Checkmate' : 'Stalemate';
     } 
 
-    return ''
+    return '';
 }
 
 var g_pieceIndex = new Array(256);
