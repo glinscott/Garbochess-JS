@@ -37,11 +37,6 @@ function EnsureAnalysisStopped() {
 }
 
 function UIAnalyzeToggle() {
-    if (GenerateValidMoves().length == 0) {
-        UpdatePVDisplay(g_inCheck ? "Checkmate" : "Stalemate");
-        return;
-    }
-
     if (InitializeBackgroundEngine()) {
         if (!g_analyzing) {
             g_backgroundEngine.postMessage("analyze");
@@ -171,7 +166,10 @@ function InitializeBackgroundEngine() {
             g_backgroundEngine.onmessage = function (e) {
                 if (e.data.match("^pv") == "pv") {
                     UpdatePVDisplay(e.data.substr(3, e.data.length - 3));
-                } else {
+                } else  if (e.data.match("^message") == "message") {
+                    EnsureAnalysisStopped();
+                    UpdatePVDisplay(e.data.substr(8, e.data.length - 8));
+                }
                     UIPlayMove(GetMoveFromString(e.data), null);
                 }
             }

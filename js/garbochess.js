@@ -1491,7 +1491,7 @@ function SetHash() {
     return result;
 }
 
-function InitializeFromFen(fen){
+function InitializeFromFen(fen) {
     var chunks = fen.split(' ');
     
     for (var i = 0; i < 256; i++) 
@@ -1511,7 +1511,7 @@ function InitializeFromFen(fen){
         else {
             if (c >= '0' && c <= '9') {
                 for (var j = 0; j < parseInt(c); j++) {
-                    g_board[((row + 2) * 0x10) + (col + 4)] = 0;
+                    g_board[MakeSquare(row, col)] = 0;
                     col++;
                 }
             }
@@ -1541,7 +1541,7 @@ function InitializeFromFen(fen){
                         break;
                 }
                 
-                g_board[((row + 2) * 0x10) + (col + 4)] = piece;
+                g_board[MakeSquare(row, col)] = piece;
                 col++;
             }
         }
@@ -1550,22 +1550,43 @@ function InitializeFromFen(fen){
     InitializePieceList();
     
     g_toMove = chunks[1].charAt(0) == 'w' ? colorWhite : 0;
+    var them = 8 - g_toMove;
     
     g_castleRights = 0;
-    if (chunks[2].indexOf('K') != -1) 
+    if (chunks[2].indexOf('K') != -1) { 
+        if (g_board[MakeSquare(7, 4)] != pieceKing | colorWhite ||
+            g_board[MakeSquare(7, 7)] != pieceRook | colorWhite) {
+            return 'Invalid FEN: White kingside castling not allowed';
+        }
         g_castleRights |= 1;
-    if (chunks[2].indexOf('Q') != -1) 
+    }
+    if (chunks[2].indexOf('Q') != -1) {
+        if (g_board[MakeSquare(7, 4)] != pieceKing | colorWhite ||
+            g_board[MakeSquare(7, 0)] != pieceRook | colorWhite) {
+            return 'Invalid FEN: White queenside castling not allowed';
+        }
         g_castleRights |= 2;
-    if (chunks[2].indexOf('k') != -1) 
+    }
+    if (chunks[2].indexOf('k') != -1) {
+        if (g_board[MakeSquare(0, 4)] != pieceKing | colorBlack ||
+            g_board[MakeSquare(0, 7)] != pieceRook | colorBlack) {
+            return 'Invalid FEN: Black kingside castling not allowed';
+        }
         g_castleRights |= 4;
-    if (chunks[2].indexOf('q') != -1) 
+    }
+    if (chunks[2].indexOf('q') != -1) {
+        if (g_board[MakeSquare(0, 4)] != pieceKing | colorBlack ||
+            g_board[MakeSquare(0, 0)] != pieceRook | colorBlack) {
+            return 'Invalid FEN: Black queenside castling not allowed';
+        }
         g_castleRights |= 8;
+    }
     
     g_enPassentSquare = -1;
     if (chunks[3].indexOf('-') == -1) {
 	var col = chunks[3].charAt(0).charCodeAt() - 'a'.charCodeAt();
 	var row = 8 - (chunks[3].charAt(1).charCodeAt() - '0'.charCodeAt());
-	g_enPassentSquare = ((row + 2) * 0x10) + (col + 4);
+	g_enPassentSquare = MakeSquare(row, col);
     }
 
     var hashResult = SetHash();
@@ -1585,7 +1606,19 @@ function InitializeFromFen(fen){
     if (!g_toMove) g_baseEval = -g_baseEval;
 
     g_move50 = 0;
-    g_inCheck = IsSquareAttackable(g_pieceList[(g_toMove | pieceKing) << 4], 8 - g_toMove);
+    g_inCheck = IsSquareAttackable(g_pieceList[(g_toMove | pieceKing) << 4], them);
+
+    // Check for king capture (invalid FEN)
+    if (IsSquareAttackable(g_pieceList[(them | pieceKing) << 4], g_toMove)) {
+        return 'Invalid FEN: Can capture king';
+    }
+
+    // Checkmate/stalemate
+    if (GenerateValidMoves().length == 0) {
+        return g_inCheck ? 'Checkmate' : 'Stalemate';
+    } 
+
+    return ''
 }
 
 var g_pieceIndex = new Array(256);
@@ -2466,7 +2499,10 @@ self.onmessage = function (e) {
     }
     if (e.data.match("^position") == "position") {
         ResetGame();
-        InitializeFromFen(e.data.substr(9, e.data.length - 9));
+        var result = InitializeFromFen(e.data.substr(9, e.data.length - 9));
+        if (result.length != 0) {
+            postMessage("message " + result);
+        }
     } else if (e.data.match("^search") == "search") {
         g_timeout = parseInt(e.data.substr(7, e.data.length - 7), 10);
         Search(FinishMoveLocalTesting, 99, FinishPlyCallback);
