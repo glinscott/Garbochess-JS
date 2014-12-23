@@ -1,0 +1,37 @@
+.disable-select {
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+#FenTextBox {
+    width: 300px;
+}
+
+#TimePerMove {
+    width: 50px;
+}
+
+body {
+  background-color: #339d60;
+}
+
+a {
+  text-decoration:none;
+  color:#000;
+}
+
+.no-highlight {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.button {
+  background: #ddd;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 8px 8px 10px black;
+  min-width: 25%;
+  padding: 4px;
+  width: 25%;
+}

@@ -1,0 +1,24 @@
+{
+  "version": "0.1",
+  "name": "Garbochess",
+  "description": "Garbochess - chess w/ offline feature",
+  "launch_path": "/oliver/chess.html",
+  "chrome": { "navigation": true },
+  "appcache_path": "/Garbochess-JS/oliver/offline.appcache",
+  "icons": {
+    "16": "/Garbochess-JS/oliver/img/icons/garbochess-16.png",
+    "32": "/Garbochess-JS/oliver/img/icons/garbochess-32.png",
+    "48": "/Garbochess-JS/oliver/img/icons/garbochess-48.png",
+    "60": "/Garbochess-JS/oliver/img/icons/garbochess-60.png",
+    "64": "/Garbochess-JS/oliver/img/icons/garbochess-64.png",
+    "90": "/Garbochess-JS/oliver/img/icons/garbochess-90.png",
+    "120": "/Garbochess-JS/oliver/img/icons/garbochess-120.png",
+    "128": "/Garbochess-JS/oliver/img/icons/garbochess-128.png",
+    "256": "/Garbochess-JS/oliver/img/icons/garbochess-256.png"
+  },
+  "developer": {
+    "name": "Oliver Merkel",
+    "url": "https://github.com/OMerkel/Garbochess-JS"
+  },
+  "installs_allowed_from": ["*"]
+}

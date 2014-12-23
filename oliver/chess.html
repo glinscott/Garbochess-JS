@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html manifest="offline.appcache">
+  <head profile="http://dublincore.org/documents/dcq-html/">
+    <link rel="icon" href="img/icons/garbochess-favicon.ico" type="image/x-icon" />
+    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
+    <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8" />
+    <meta name="DC.rights" content="BSD; third-party code MIT" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="apple-touch-icon" href="img/icons/garbochess-128.png" />
+    <title>GarboChess Javascript</title> 
+    <script type="text/javascript" src="thirdparty/jquery-1.11.2.js"></script> 
+    <script type="text/javascript" src="thirdparty/jquery-ui-1.11.2/jquery-ui.js"></script> 
+    <script type="text/javascript" src="js/garbochess.js"></script>
+    <script type="text/javascript" src="js/boardui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            g_timeout = 1000;
+            UINewGame();
+        });
+    </script> 
+    <link rel='stylesheet' type='text/css' href='css/chess.css' />
+  </head>
+  <body>
+    <div align="center" style="max-width: 100%;">
+      <div style="margin-top: 5px;">
+        <div id='board'></div> 
+      </div>
+      <div style="margin-top: 8px;">
+        <div style="float:left;" class="button"><a href="javascript:UINewGame()"><svg
+          height="15"
+          width="15"
+          viewBox="-15 -15 30 30"
+          >
+          <g id="restartsymbol">
+            <g transform="translate(-0.16426637,-2.7925283)">
+              <path
+                 id="arctop"
+                 d="m -11.948321,-3.9869812 c 4.5942271,-12.3063408 22.118461,-8.8543618 23.32171,1.3476643"
+                 style="fill:none;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 id="arrowtop"
+                 d="M 9.1989168,-4.1169873 11.745046,0.72887068 12.812778,-4.6097864 z"
+                 style="fill:#000000;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+            </g>
+            <g transform="matrix(-1,0,0,-1,-0.06057028,1.2226969)">
+              <path
+                 id="arcbottom"
+                 d="m -11.948321,-3.9869812 c 4.5942271,-12.3063408 22.118461,-8.8543618 23.32171,1.3476643"
+                 style="fill:none;stroke:#000000;stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+              <path
+                 id="arrowbottom"
+                 d="M 9.1989168,-4.1169873 11.745046,0.72887068 12.812778,-4.6097864 z"
+                 style="fill:#000000;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+            </g>
+          </g>
+          </svg>&nbsp;new</a>
+        </div>
+        <div style="float:left; margin-left: 5%; margin-right: 5%;"
+          class="button"><a href="javascript:UIChangeStartPlayer()">
+        swap</a></div>
+        <div style="float:left;" class="button"><a href="javascript:UIUndoMove()">undo</a></div>
+      </div>
+      <br />
+      <div style="margin-top: 32px;">
+        Time per move: <input id="TimePerMove" value="3000"
+        type="number" onchange="javascript:UIChangeTimePerMove()" />ms
+      </div>
+      <span id='output'></span><br/> 
+	    <textarea cols='32' rows='6' id='PgnTextBox'></textarea><br/>
+      <div style="margin-top: 4px; margin-bottom: 16px;">
+        <div class="button">
+          <a id='AnalysisToggleLink' href="javascript:UIAnalyzeToggle()">toggle analysis</a>
+        </div>
+      </div>
+      FEN: <input id='FenTextBox' onchange="javascript:UIChangeFEN()"/>
+    </div>
+  </body>
+</html>
