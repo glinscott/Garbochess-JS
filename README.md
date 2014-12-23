@@ -1,5 +1,12 @@
+Garbochess-JS
+=============
 
-Start an online Garbochess-JS session on http://omerkel.github.io/Garbochess-JS/oliver/chess.html
+<img src="http://omerkel.github.io/Garbochess-JS/oliver/img/icons/garbochess-128.png" /> A javascript chess engine using WebWorkers.
+
+* <em>Start an online</em> <b>Garbochess-JS</b> <em>session on</em> http://omerkel.github.io/Garbochess-JS/oliver/chess.html
+* <em>runs in various browsers on</em>
+    * <em>desktop systems like BSDs, Linux, Win, MacOS and</em>
+    * <em>mobile platforms like Android, FirefoxOS, iOS.</em>
 
 Thanks
 ------
@@ -58,7 +65,7 @@ Version 6.0
 - Bonuses for knight attacking pieces (+20)
 - Bonus for bishop pins (+40)
 
-TODO:
------
+TODO
+----
 - Only extend checks with SEE > 0?
 - Single reply to check should be marked as dangerous.
