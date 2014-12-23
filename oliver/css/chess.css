@@ -17,6 +17,10 @@ body {
   background-color: #339d60;
 }
 
+input {
+  font-size: 20px;
+}
+
 a {
   text-decoration:none;
   color:#000;
