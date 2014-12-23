@@ -8,7 +8,8 @@ var g_changingFen = false;
 var g_analyzing = false;
 
 var g_uiBoard;
-var g_cellSize = 45;
+var g_cellSize = 36,
+    g_minCellSize = g_cellSize;
 
 function UINewGame() {
     moveNumber = 1;
@@ -237,15 +238,16 @@ function RedrawPieces() {
                 pieceName += (piece & 0x8) ? "white" : "black";
             }
 
+            var img = document.createElement("img");
+            img.width = g_cellSize;
+            img.height = g_cellSize;
+            img.style.margin = "0px";
+            img.style.padding = "0px";
+            var divimg = document.createElement("div");
+            divimg.style.maxWidth = g_cellSize + "px";
+            divimg.style.maxHeight = g_cellSize + "px";
             if (pieceName != null) {
-                var img = document.createElement("div");
-                $(img).addClass('sprite-' + pieceName);
-                img.style.backgroundImage = "url('img/sprites.png')";
-                img.width = g_cellSize;
-                img.height = g_cellSize;
-                var divimg = document.createElement("div");
-                divimg.appendChild(img);
-
+                img.src = "img/" + pieceName + ".png"
                 $(divimg).draggable({ start: function (e, ui) {
                     if (g_selectedPiece === null) {
                         g_selectedPiece = this;
@@ -274,22 +276,22 @@ function RedrawPieces() {
                         g_selectedPiece = null;
                     }
                 });
-
-                $(td).empty().append(divimg);
             } else {
-                $(td).empty();
+                img.src = "img/blank.gif"
             }
+            divimg.appendChild(img);
+            $(td).empty().append(divimg);
         }
     }
 }
 
 function RedrawBoard() {
     var div = $("#board")[0];
-
     var table = document.createElement("table");
     table.cellPadding = "0px";
     table.cellSpacing = "0px";
     $(table).addClass('no-highlight');
+    $(table).addClass('disable-select');
 
     var tbody = document.createElement("tbody");
 
@@ -383,9 +385,22 @@ function RedrawBoard() {
     RedrawPieces();
 
     $(div).empty();
-    div.appendChild(table);
-
-    g_changingFen = true;
-    document.getElementById("FenTextBox").value = GetFen();
-    g_changingFen = false;
+    if ( typeof div !== 'undefined' ) {
+      div.appendChild(table);
+      g_changingFen = true;
+      document.getElementById("FenTextBox").value = GetFen();
+      g_changingFen = false;
+    }
 }
+
+function ResizeBoard() {
+  var innerWidth = window.innerWidth,
+    innerHeight = window.innerHeight;
+  g_cellSize = innerHeight > innerWidth ? innerWidth * 9 / 80 :
+    innerHeight * 9 / 90;
+  g_cellSize = g_cellSize < g_minCellSize ? g_minCellSize : g_cellSize;
+  RedrawBoard();
+}
+
+$(window).on('resize', ResizeBoard);
+$(window).resize();

@@ -1,3 +1,10 @@
+
+* Substantial Garbochess-JS parts are BSD 3-Clause licensed
+* Thirdparty code of JQuery and JQuery-UI follow the MIT license
+   * corresponding license texts can be reproduced from Thirdparty directory
+
+---
+
 Copyright (c) 2011 Gary Linscott
 All rights reserved.
 
