@@ -9,7 +9,7 @@ Garbochess-JS
     * <em>desktop systems like BSDs, Linux, Win, MacOS and</em>
     * <em>mobile platforms like Android, FirefoxOS, iOS.</em>
 
-<b>Keywords</b> <em>Chess, Schach, Ajedrez, Computer Chess, Offline Appcache Support / <a href="http://www.w3.org/TR/2011/WD-html5-20110525/offline.html">Offline Web application HTML5</a>, Installable Desktop Application, <a href="http://www.w3.org/TR/workers/">Web workers</a>, CC0: Scalable Vector Graphics (SVG) chess set</em>
+<b>Keywords</b> <em>Chess, Schach, Ajedrez, Computer Chess, Offline Appcache Support / <a href="http://www.w3.org/TR/2011/WD-html5-20110525/offline.html">Offline Web application HTML5</a>, Installable Desktop Application, <a href="http://www.w3.org/TR/workers/">Web workers</a>, CC0: Scalable Vector Graphics (SVG) chess set, Safari Apple-mobile-web-app support</em>
 
 Thanks
 ------
