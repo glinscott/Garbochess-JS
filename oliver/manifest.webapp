@@ -1,9 +1,8 @@
 {
-  "version": "6.0",
+  "version": "6.0.1",
   "name": "Garbochess",
   "description": "Garbochess - chess w/ offline feature",
   "launch_path": "/chess.html",
-  "chrome": { "navigation": true },
   "icons": {
     "16": "/img/icons/garbochess-16.png",
     "32": "/img/icons/garbochess-32.png",

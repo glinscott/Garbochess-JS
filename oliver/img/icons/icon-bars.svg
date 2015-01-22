@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+Copyright (c) 2014
+@author Oliver Merkel, Merkel(dot)Oliver(at)web(dot)de.
+All rights reserved.
+
+This graphics is licensed under a
+http://creativecommons.org/licenses/by-nc-sa/4.0/deed.en_US
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+-->
+<svg version="1.1"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:cc="http://creativecommons.org/ns#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns="http://www.w3.org/2000/svg"
+  width="32px" height="32px"
+  viewBox="-14 -14 28 28">
+  <title
+     id="titleIconBars">Icon bars</title>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>icon bars</dc:title>
+        <dc:date>2014-11-06</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Oliver Merkel, Merkel(dot)Oliver (at)web(dot) de</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Oliver Merkel, Merkel(dot)Oliver (at)web(dot) de</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>Oliver Merkel, Merkel(dot)Oliver (at)web(dot) de</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:language>en-GB</dc:language>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by-nc-sa/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:prohibits
+           rdf:resource="http://creativecommons.org/ns#CommercialUse" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#ShareAlike" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <circle style="stroke-width:3;stroke:#333;fill:#222;" cx="0" cy="0" r="12" />
+  <path style="stroke:#fff;stroke-linecap:round;stroke-width:2.5;"
+    d="M-5,-4 5,-4 M-5,0 5,0 M-5,4 5,4" />
+</svg>

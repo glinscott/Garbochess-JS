@@ -8,14 +8,13 @@ var g_changingFen = false;
 var g_analyzing = false;
 
 var g_uiBoard;
-var g_cellSize = 36,
+var g_cellSize = 33,
     g_minCellSize = g_cellSize;
 
 function UINewGame() {
     moveNumber = 1;
 
-    var pgnTextBox = document.getElementById("PgnTextBox");
-    pgnTextBox.value = "";
+    $('#PgnTextBox').html('');
 
     EnsureAnalysisStopped();
     ResetGame();
@@ -45,7 +44,7 @@ function UIAnalyzeToggle() {
             EnsureAnalysisStopped();
         }
         g_analyzing = !g_analyzing;
-        document.getElementById("AnalysisToggleLink").innerText = g_analyzing ? "Analysis: On" : "Analysis: Off";
+        $('#ShowAnalysis').attr('checked', g_analyzing).checkboxradio('refresh');
     } else {
         alert("Your browser must support web workers for analysis - (chrome4, ff4, safari)");
     }
@@ -79,12 +78,12 @@ function UIChangeStartPlayer() {
 }
 
 function UpdatePgnTextBox(move) {
-    var pgnTextBox = document.getElementById("PgnTextBox");
+    var pgnTextBox = $('#PgnTextBox');
     if (g_toMove != 0) {
-        pgnTextBox.value += moveNumber + ". ";
+        pgnTextBox.append( moveNumber + ". " );
         moveNumber++;
     }
-    pgnTextBox.value += GetMoveSAN(move) + " ";
+    pgnTextBox.append( GetMoveSAN(move) + " " );
 }
 
 function UIChangeTimePerMove() {
@@ -394,12 +393,42 @@ function RedrawBoard() {
 
 function ResizeBoard() {
   var innerWidth = window.innerWidth,
-    innerHeight = window.innerHeight;
-  g_cellSize = innerHeight > innerWidth ? innerWidth * 9 / 80 :
-    innerHeight * 9 / 90;
+    innerHeight = window.innerHeight - 32;
+  g_cellSize = innerHeight > innerWidth ? innerWidth / 8.2 :
+    innerHeight / 8.2;
   g_cellSize = g_cellSize < g_minCellSize ? g_minCellSize : g_cellSize;
+  var minSize = 32;
+  var size = 0.06 * innerWidth < minSize ? minSize : 0.06 * innerWidth;
+  $('#customMenu').css({
+    'width': size+'px', 'height': size+'px',
+    'background-size': size+'px ' + size+'px',
+  });
+  size = 0.05 * innerWidth < minSize ? minSize : 0.05 * innerWidth;
+  $('#customBackOptions').css({
+    'width': size+'px', 'height': size+'px',
+    'background-size': size+'px ' + size+'px',
+  });
+  $('#customBackAbout').css({
+    'width': size+'px', 'height': size+'px',
+    'background-size': size+'px ' + size+'px',
+  });
   RedrawBoard();
 }
 
-$(window).on('resize', ResizeBoard);
-$(window).resize();
+function UIInit() {
+  $(window).on('resize', ResizeBoard);
+  $(window).resize();
+
+  $('#new').click( UINewGame );
+  $('#undo').click( UIUndoMove );
+
+  $('#TimePerMove').on( 'change', UIChangeTimePerMove );
+  $('#ShowAnalysis').on( 'change', UIAnalyzeToggle );
+  $('#StartPlayer').on( 'change', UIChangeStartPlayer );
+
+  $('#FenTextBox').on( 'change', UIChangeFEN );
+  UIChangeTimePerMove();
+  UINewGame();
+}
+
+$(document).ready( UIInit );
