@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html manifest="offline.appcache">
-  <head profile="http://dublincore.org/documents/dcq-html/">
-    <link rel="icon" href="img/icons/garbochess-favicon.ico" type="image/x-icon" />
-    <link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />
-    <link rel="schema.DCTERMS" href="http://purl.org/dc/terms/" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta charset="UTF-8" />
-    <meta name="AUTHOR" content="Gary Linscott" />
-    <meta name="AUTHOR" content="Oliver Merkel" />
-    <meta name="COPYRIGHT" content="Gary Linscott, Oliver Merkel" />
-    <meta name="DC.creator" content="Gary Linscott" />
-    <meta name="DC.creator" content="Oliver Merkel" />
-    <meta name="DC.contributor" content="Gary Linscott" />
-    <meta name="DC.contributor" content="Oliver Merkel" />
-    <meta name="DC.rights" content="
+<html>
+  <head profile='http://dublincore.org/documents/dcq-html/'>
+    <link rel='icon' href='img/icons/garbochess-favicon.ico' type='image/x-icon' />
+    <link rel='schema.DC' href='http://purl.org/dc/elements/1.1/' />
+    <link rel='schema.DCTERMS' href='http://purl.org/dc/terms/' />
+    <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+    <meta charset='UTF-8' />
+    <meta name='AUTHOR' content='Gary Linscott' />
+    <meta name='AUTHOR' content='Oliver Merkel' />
+    <meta name='COPYRIGHT' content='Gary Linscott, Oliver Merkel' />
+    <meta name='DC.creator' content='Gary Linscott' />
+    <meta name='DC.creator' content='Oliver Merkel' />
+    <meta name='DC.contributor' content='Gary Linscott' />
+    <meta name='DC.contributor' content='Oliver Merkel' />
+    <meta name='DC.rights' content="
 * Thirdparty code of JQuery, JQuery-Mobile and JQuery-UI follow the MIT license
    * corresponding license texts can be reproduced from Thirdparty directory
 
@@ -21,7 +21,7 @@
 
 * Substantial Garbochess-JS parts are BSD 3-Clause licensed
 
-Copyright (c) 2011-2015 Gary Linscott, Oliver Merkel
+Copyright (c) 2011-2016 Gary Linscott, Oliver Merkel
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 * Application icon images located in folder oliver/img/icons are licensed public domain in terms of cc0:
    * http://creativecommons.org/publicdomain/zero/1.0/
 
-No copyright, 2015 Oliver Merkel
+No copyright, 2016 Oliver Merkel
 
 The person who associated a work with this deed has dedicated the
 work to the public domain by waiving all of his or her rights to
@@ -82,16 +82,16 @@ Other Information
     <title>GarboChess Javascript</title> 
     <meta name='apple-mobile-web-app-capable' content='yes' />
     <meta name='apple-mobile-web-app-status-bar-style' content='black' />
-    <link rel='apple-touch-icon' href='img/icons/garbochess-128.png' />
+    <link rel='apple-touch-icon' href='img/icons/garbochess128.png' />
     <meta content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0'
       name='viewport' />
 	  <link rel='stylesheet' type='text/css' href='thirdparty/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css' />
     <link rel='stylesheet' type='text/css' href='css/chess.css' />  
-    <script src="thirdparty/jquery-1.11.2.js" type="text/javascript"></script> 
-    <script src="thirdparty/jquery-ui-1.11.2/jquery-ui.js" type="text/javascript"></script> 
+    <script src='thirdparty/jquery-2.1.4.js' type='text/javascript'></script> 
+    <script src='thirdparty/jquery-ui-1.11.4/jquery-ui.js' type='text/javascript'></script> 
 	  <script src='thirdparty/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js' type='text/javascript'></script>
-    <script src="js/garbochess.js" type="text/javascript"></script>
-    <script src="js/boardui.js" type="text/javascript" defer></script>
+    <script src='js/garbochess.js' type='text/javascript'></script>
+    <script src='js/boardui.js' type='text/javascript' defer></script>
   </head>
   <body>
     <div data-role='page' data-theme='b' id='game-page' class='mybackground'>
@@ -113,7 +113,7 @@ Other Information
             ui-body-inherit ui-corner-all ui-textinput-autogrow'></div> 
           <div id='PgnTextBox' class='ui-input-text ui-shadow-inset
             ui-body-inherit ui-corner-all ui-textinput-autogrow'></div>
-          <div class="ui-field-contain">
+          <div class='ui-field-contain'>
             <label for='FenTextBox'>FEN</label>
             <input id='FenTextBox' />
           </div>
@@ -146,18 +146,18 @@ Other Information
     <form>
       <fieldset data-role='controlgroup'>
         <legend>Computer Engine / AI</legend>
-        <div class="ui-field-contain">
-          <label for="TimePerMove" class="select">Time/move</label>
-          <select name="TimePerMove" id="TimePerMove">
-            <option value="1000">1 sec</option>
-            <option value="3000" selected>3 sec</option>
-            <option value="5000">5 sec</option>
-            <option value="10000">10 sec</option>
-            <option value="20000">20 sec</option>
-            <option value="30000">30 sec</option>
-            <option value="60000">1 min</option>
-            <option value="180000">3 min</option>
-            <option value="300000">5 min</option>
+        <div class='ui-field-contain'>
+          <label for='TimePerMove' class='select'>Time/move</label>
+          <select name='TimePerMove' id='TimePerMove'>
+            <option value='1000'>1 sec</option>
+            <option value='3000' selected>3 sec</option>
+            <option value='5000'>5 sec</option>
+            <option value='10000'>10 sec</option>
+            <option value='20000'>20 sec</option>
+            <option value='30000'>30 sec</option>
+            <option value='60000'>1 min</option>
+            <option value='180000'>3 min</option>
+            <option value='300000'>5 min</option>
           </select>
         </div>
         <label for='ShowAnalysis'>Board Analysis only</label>
@@ -175,11 +175,11 @@ Other Information
     </ul>
     <form>
       <fieldset data-role='controlgroup'>
-        <div class="ui-field-contain">
-          <label for="StartPlayer" class="select">View&nbsp;from</label>
-          <select name="StartPlayer" id="StartPlayer">
-            <option value="white" selected>White</option>
-            <option value="black">Black</option>
+        <div class='ui-field-contain'>
+          <label for='StartPlayer' class='select'>View&nbsp;from</label>
+          <select name='StartPlayer' id='StartPlayer'>
+            <option value='white' selected>White</option>
+            <option value='black'>Black</option>
           </select>
         </div>
       </fieldset>
@@ -209,14 +209,14 @@ Other Information
     </figure>
     <br />
     <h3>Legal</h3>
-    <p>Copyright (c) 2011-2015<br />
+    <p>Copyright (c) 2011-2016<br />
     <em>@author</em> Gary Linscott, Merkel(dot) Oliver(at) web(dot) de.<br />
     <em>@author</em> Oliver Merkel, gary(dot) linscott(at) hotmail(dot) com.<br />
     All rights reserved.<br />
     Logos and trademarks belong to their respective owners.</p>
     <p>Substantial Garbochess-JS parts are BSD 3-Clause licensed.</p>
     <h4>The BSD License (BSD)</h4>
-    <p>Copyright (c) 2011-2015 Gary Linscott, gary(dot) linscott(at) hotmail(dot) com &amp; Oliver Merkel, Merkel(dot) Oliver(at) web(dot)de</p>
+    <p>Copyright (c) 2011-2016 Gary Linscott, gary(dot) linscott(at) hotmail(dot) com &amp; Oliver Merkel, Merkel(dot) Oliver(at) web(dot)de</p>
 
     <p>Redistribution and use in source and binary forms, with or without
       modification, are permitted provided that the following conditions
@@ -243,9 +243,9 @@ Other Information
       (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
       THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
 
-    <div data-role="collapsible-set" data-theme="c" data-content-theme="d"
-      data-iconpos="right" data-collapsed-icon="arrow-l" data-expanded-icon="arrow-d">
-    <div data-role="collapsible">
+    <div data-role='collapsible-set' data-theme='c' data-content-theme='d'
+      data-iconpos='right' data-collapsed-icon='arrow-l' data-expanded-icon='arrow-d'>
+    <div data-role='collapsible'>
       <h4>Specific Subset of Images</h4>
       <ul>
         <li>Scalable Vector Graphics chess set located in folder oliver/img/*.svg
@@ -255,16 +255,16 @@ Other Information
       </ul>
 
       <p>These specifically listed graphics are licensed under
-        <br /><a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/"
-        target="_blank"><img alt="Creative Commons License" style="border-width:0"
-        src="img/icons/cc0_1.0_88x31.png" /></a><br />
-        <a rel="license" href="https://creativecommons.org/publicdomain/zero/1.0/"
-        target="_blank"> CC0 1.0 Universal (CC0 1.0) Public Domain Dedication</a>.<br />
-        No copyright, 2015 Oliver Merkel
+        <br /><a rel='license' href='https://creativecommons.org/publicdomain/zero/1.0/'
+        target='_blank'><img alt='Creative Commons License' style='border-width:0'
+        src='img/icons/cc0_1.0_88x31.png' /></a><br />
+        <a rel='license' href='https://creativecommons.org/publicdomain/zero/1.0/'
+        target='_blank'> CC0 1.0 Universal (CC0 1.0) Public Domain Dedication</a>.<br />
+        No copyright, 2016 Oliver Merkel
       </p>
     </div><!-- collapsible -->
 
-    <div data-role="collapsible">
+    <div data-role='collapsible'>
       <h4>Third Party Code Licenses</h4>
       <p>This <b>Garbochess</b> implementation uses unmodified
       independent code libraries provided by <em>third parties</em>.
@@ -274,20 +274,20 @@ Other Information
       any related list of conditions, disclaimers, and especially
       the copyright holders and authors of the corresponding third
       party functionality.</p>
-      <a href="https://github.com/jquery/jquery" data-role="button" data-theme="c"
-        rel="external" target="_blank" type="text/html"
-        title="jQuery - Repository">
-        <img src="thirdparty/jquery-favicon.ico" />
+      <a href='https://github.com/jquery/jquery' data-role='button' data-theme='c'
+        rel='external' target='_blank' type='text/html'
+        title='jQuery - Repository'>
+        <img src='thirdparty/jquery-favicon.ico' width='16' height='16' />
         jQuery: MIT</a>
-      <a href="https://github.com/jquery/jquery-mobile" data-role="button" data-theme="c"
-        rel="external" target="_blank" type="text/html"
-        title="jQuery Mobile - Repository">
-        <img src="thirdparty/jquery.mobile-1.4.5/demos/favicon.ico" />
+      <a href='https://github.com/jquery/jquery-mobile' data-role='button' data-theme='c'
+        rel='external' target='_blank' type='text/html'
+        title='jQuery Mobile - Repository'>
+        <img src='thirdparty/jquery.mobile-1.4.5/demos/favicon.ico' width='16' height='16' />
         jQuery Mobile: MIT</a>
-      <a href="https://github.com/jquery/jquery-ui" data-role="button" data-theme="c"
-        rel="external" target="_blank" type="text/html"
-        title="jQuery UI - Repository">
-        <img src="thirdparty/jquery-ui-1.11.2/favicon.ico" />
+      <a href='https://github.com/jquery/jquery-ui' data-role='button' data-theme='c'
+        rel='external' target='_blank' type='text/html'
+        title='jQuery UI - Repository'>
+        <img src='thirdparty/jquery-ui-1.11.4/favicon.ico' width='16' height='16' />
         jQuery UI: MIT</a>
     </div><!-- collapsible -->
     </div><!-- collapsible-set -->
