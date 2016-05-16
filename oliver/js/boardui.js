@@ -12,6 +12,7 @@ var g_cellSize = 33,
     g_minCellSize = g_cellSize;
 
 function UINewGame() {
+    $( '#left-panel' ).panel( 'close' );
     moveNumber = 1;
 
     $('#PgnTextBox').html('');
