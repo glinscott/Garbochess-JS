@@ -2,7 +2,7 @@
   "version": "6.0.1",
   "name": "Garbochess",
   "description": "Garbochess",
-  "launch_path": "/oliver/index.html",
+  "launch_path": "/Garbochess-JS/oliver/index.html",
   "icons": {
     "16": "/Garbochess-JS/oliver/img/icons/garbochess16.png",
     "32": "/Garbochess-JS/oliver/img/icons/garbochess32.png",
