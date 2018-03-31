@@ -1,0 +1,117 @@
+.ui-btn-icon-notext:after {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.customMenu {
+    background: url(../img/icons/icon-bars.svg) 50% 50% no-repeat;
+    left: 50%;
+    top: 50%;
+}
+
+.customBack {
+    background: url(../img/icons/icon-delete.svg) 50% 50% no-repeat;
+    left: 50%;
+    top: 50%;
+}
+
+.ui-btn-icon-notext.ui-corner-all {
+    border-radius: 20em;
+}
+
+.ui-btn {
+    border-width: 0px;
+    border-style: none;
+}
+
+.mycontent {
+  padding: 0;
+  background-color: #339d60;
+}
+
+.disable-select {
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+#board {
+    margin-top: 14px;
+}
+
+a {
+  text-decoration:none;
+  color:#000;
+}
+
+.no-highlight {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+figure.diagram {
+  width: 58%;
+  max-width: 512px;
+  border: 1px solid #cccccc;
+  margin: 0 2px 0 2px;
+  padding: 2px 12px 2px 2px;
+  border-radius: 11px;
+}
+
+figure.diagram img {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  border-radius: 7px 7px 0 0;
+  margin: 0px;
+}
+
+figure.diagram embed {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  border-radius: 7px 7px 0 0;
+  margin: 0px;
+}
+
+figure.diagram figcaption {
+  background-color: #666; color: #fff;
+  font-style: italic;
+  width: 100%;
+  padding: 5px;
+  border-radius: 0 0 8px 8px;
+  margin: 0px;
+}
+
+figure.author {
+  width: 30%;
+  max-width: 320px;
+  border: 1px solid #cccccc;
+  margin: 0 2px 0 2px;
+  padding: 2px 12px 2px 2px;
+  border-radius: 11px;
+}
+
+figure.author img {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  border-radius: 7px 7px 0 0;
+  margin: 0px;
+}
+
+figure.author embed {
+  width: 100%;
+  border: 1px solid #cccccc;
+  padding: 4px;
+  border-radius: 7px 7px 0 0;
+  margin: 0px;
+}
+
+figure.author figcaption {
+  background-color: #666; color: #fff;
+  font-style: italic;
+  width: 100%;
+  padding: 5px;
+  border-radius: 0 0 8px 8px;
+  margin: 0px;
+}

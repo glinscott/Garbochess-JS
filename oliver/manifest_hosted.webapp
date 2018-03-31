@@ -1,0 +1,22 @@
+{
+  "version": "6.0.1",
+  "name": "Garbochess",
+  "description": "Garbochess",
+  "launch_path": "/Garbochess-JS/oliver/index.html",
+  "icons": {
+    "16": "/Garbochess-JS/oliver/img/icons/garbochess16.png",
+    "32": "/Garbochess-JS/oliver/img/icons/garbochess32.png",
+    "48": "/Garbochess-JS/oliver/img/icons/garbochess48.png",
+    "60": "/Garbochess-JS/oliver/img/icons/garbochess60.png",
+    "64": "/Garbochess-JS/oliver/img/icons/garbochess64.png",
+    "90": "/Garbochess-JS/oliver/img/icons/garbochess90.png",
+    "120": "/Garbochess-JS/oliver/img/icons/garbochess120.png",
+    "128": "/Garbochess-JS/oliver/img/icons/garbochess128.png",
+    "256": "/Garbochess-JS/oliver/img/icons/garbochess256.png"
+  },
+  "developer": {
+    "name": "Oliver Merkel",
+    "url": "https://github.com/OMerkel/Garbochess-JS"
+  },
+  "installs_allowed_from": ["*"]
+}

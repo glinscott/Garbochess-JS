@@ -1,3 +1,15 @@
+<img alt="Garbochess icon" width="64" src="oliver/img/icons/garbochess128.png" /> Garbochess-JS
+=============
+
+* <em>Start an online</em> <b>Garbochess-JS</b> <em>session on</em> http://omerkel.github.io/Garbochess-JS/oliver
+* <em>Android APK available for install</em> <img align="top" width="32" src="oliver/res/android.gif" /> https://github.com/OMerkel/Garbochess-JS/releases/tag/release_6.0.1
+    * requires minimum Android 4.4.2 (API-19)
+* <em>runs in various browsers on</em>
+    * <em>desktop systems like BSDs, Linux, Win, MacOS and</em>
+    * <em>mobile platforms like Android, FirefoxOS, iOS.</em>
+
+<b>Keywords</b> <em>Chess, Schach, Ajedrez, Computer Chess, ECMA script, <a href="http://www.w3.org/TR/workers/">Web workers</a>, CC0: <a href="http://www.w3.org/Graphics/SVG/">Scalable Vector Graphics (SVG)</a> chess set, Safari Apple-mobile-web-app support</em>
+
 Thanks
 ------
 - Stockfish authors
@@ -55,7 +67,7 @@ Version 6.0
 - Bonuses for knight attacking pieces (+20)
 - Bonus for bishop pins (+40)
 
-TODO:
------
+TODO
+----
 - Only extend checks with SEE > 0?
 - Single reply to check should be marked as dangerous.
