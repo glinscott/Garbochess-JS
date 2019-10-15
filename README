@@ -22,12 +22,12 @@ Version 2.0
 
 Version 3.0
 -----------
-- 604.5/1000 or ~70 ELO better than previous version
+- 604.5/1000 or ~70 ELO better than the previous version
 - Killer moves
 - Tuned PSQ tables/mobility
 - Better king eval in endgame (won't stay on back row)
 - Show '#' for checkmate
-- Improved UI (new game, switch black/white, choose time/move)
+- Improved UI (a new game, switch black/white, choose time/move)
 - Fixed crashes from using invalid hash moves
 - Other small bug fixes
 - Speed optimizations
@@ -35,16 +35,16 @@ Version 3.0
 Version 4.0
 -----------
 - 594.5/1000 %:59.45 or 66 Elo better than previous
-- SEE added (QSearch pruning, losing captures in main search)
-- No nullmove in pawn endgames
+- SEE added (QSearch pruning, losing captures in the main search)
+- No null move in pawn endgames
 - Fixed hashtable bugs (RNG was bad)
 - Fixed starting position when playing black
-- Added ability to analyze position for browsers that support it
+- Added ability to analyze the position for browsers that support it
 - Added support for pasting FEN positions
 
 Version 5.0
 -----------
-- Added checks in first ply of q-search (+15)
+- Added checks in the first ply of q-search (+15)
 
 Version 5.1
 -----------
